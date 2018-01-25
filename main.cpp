@@ -1,15 +1,20 @@
 #include <iostream>
+#include <cstring>
 #include "List.h"
+
 void print(Item item){
-    std::cout << item.score << " ";
+    std::cout << item.str << " ";
 }
 
 int main() {
     Item myItem;
-    myItem.score = 5;
+    strcpy(myItem.str, "Text");
+    //myItem.str = "Text";
+
     List myList;
-    myList.AddItem(myItem);
+    for(int i = 0; i < 10; i++){
+        myList.AddItem(myItem);
+    }
     myList.Traverse(print);
-    std::cout << "Hello, World!" << std::endl;
     return 0;
 }

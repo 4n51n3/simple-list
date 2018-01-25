@@ -2,6 +2,7 @@
 // Created by d on 24.01.18.
 //
 
+#include <cstring> //memcpy
 #include "List.h"
 
 List::List() {
@@ -9,13 +10,14 @@ List::List() {
 }
 
 bool List::ListIsEmpty() {
-    return (this->head == NULL);
+    return (this->head == nullptr);
 }
 
 bool List::ListIsFull() {
     Node* pNode;
 
     pNode = new Node;
+    delete pNode;
 
     return true;
 }
@@ -30,12 +32,12 @@ void List::AddItem(Item &item) {
     newNode->CopyToNode(item);
 
     //Add node to end
-    while (pNode != NULL){
-        pNode = pNode->next;
-    }
-    if(this->head == NULL){
+    if(this->head == nullptr){
         this->head = newNode;
     }else{
+        while (pNode->next != nullptr){
+            pNode = pNode->next;
+        }
         pNode->next = newNode;
     }
 }
@@ -43,21 +45,40 @@ void List::AddItem(Item &item) {
 void List::Traverse(void (*pFunc)(Item)) {
     Node* pNode = this->head;
 
-    while (pNode != NULL){
+    while (pNode != nullptr){
         pFunc(pNode->item);
         pNode = pNode->next;
     }
 }
 
+void List::Free() {
+    Node* pNode = this->head;
+    Node* del = nullptr;
+    while (pNode != nullptr){
+        del = pNode;
+        pNode = pNode->next;
+        del->Dispose();
+    }
+
+    this->head = nullptr;
+}
+
 void List::Node::CopyToNode(Item &item) {
-    this->item.score = item.score;
-    this->next = nullptr;
+  //  std::copy(&item, &item, &(this->item));
+    memcpy(&(this->item), &item, sizeof(Item));//work
 }
 
 List::Node::~Node() {
-    delete this;
+
 }
 
-void List::Node::Free() {
-    delete this;
+List::Node::Node() {
+    this->next = nullptr;
+
 }
+
+void List::Node::Dispose() {
+    delete this;
+
+}
+

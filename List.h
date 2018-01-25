@@ -4,23 +4,27 @@
 
 #ifndef CPP_LIST_LIST_H
 #define CPP_LIST_LIST_H
-#include <stdlib.h>
-
+#include <cstdlib>
+//#include <algorithm> //std::copy
 class Item{
 public:
-    int score;
+    char str[10];
 };
 
 class List {
 private:
     class Node{
     public:
-        void CopyToNode(Item &item);
+        Node();
         virtual ~Node();
-        virtual void Free();
+        void CopyToNode(Item &item);
+        void Dispose();
+
+    public:
         Item item;
         Node* next;
     };
+
 public:
     List();
     virtual ~List();
@@ -28,6 +32,7 @@ public:
     bool ListIsFull();
     void AddItem(Item &item);
     void Traverse(void (*pFunc)(Item item));
+    void Free();
 
 public:
     Node* head;
