@@ -7,7 +7,8 @@ void print(Item item) {
 }
 
 int main() {
-    Item myItem;
+
+    Item myItem{};
     strcpy(myItem.str, "Text");
     //myItem.str = "Text";
 
@@ -16,6 +17,10 @@ int main() {
         myList.AddItem(myItem);
     }
     myList.Traverse(print);
-    std::cout << "\n" << myList[11].str;
+   // std::cout << "\n" << myList[5].str;
+
+    for(List::Iterator it(myList); it(); it++){
+        print(*it.item);
+    }
     return 0;
 }

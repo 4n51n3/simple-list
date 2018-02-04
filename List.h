@@ -13,25 +13,19 @@ public:
     char str[10];
 };
 
+
+
+
+
 class List {
 private:
-    class Node {
-    public:
-        Node();
-
-        virtual ~Node();
-
-        void CopyToNode(Item &item);
-
-        void Dispose();
-
-    public:
-        Item item;
-        Node *next;
-    };
+    class Node;
 
 private:
     unsigned long int Count;
+
+public:
+    Node *head;
 
 public:
     List();
@@ -48,12 +42,72 @@ public:
 
     void Free();
 
+    /*auto Count(){
+        return Count;
+    }*/
+
     Item &operator[](int x);
 
-public:
-    Node *head;
+    List &operator+( List& item2);
+
+    List(List &other);
+
+    class Iterator;
 
 };
 
 
+
+class List::Node {
+public:
+    Item item;
+    Node *next;
+public:
+    Node();
+
+    virtual ~Node();
+
+    void CopyToNode(Item &item){
+        //  std::copy(&item, &item, &(this->item));
+        memcpy(&(this->item), &item, sizeof(Item));//work
+    }
+
+    void Dispose() {
+        delete this;
+    }
+
+
+};
+
+class List::Iterator{
+    Node* next;
+public:
+    Item* item;
+
+    virtual ~Iterator() {
+        item = nullptr;
+        next = nullptr;
+    }
+
+    explicit Iterator(List &lst){
+        this->next = lst.head;
+        item = &next->item;
+    }
+
+    Iterator() = delete;
+
+    bool operator()(){
+        return next != nullptr;
+    }
+
+    void operator++(){
+        next = next->next;
+        item = &next->item;
+    }
+
+    void operator++(int notUsed){
+        next = next->next;
+        item = &next->item;
+    }
+};
 #endif //CPP_LIST_LIST_H

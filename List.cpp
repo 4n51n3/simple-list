@@ -81,20 +81,20 @@ Item &List::operator[](int x) {
     throw "[ERROR] (operator[]) Not found!\n";
 }
 
-void List::Node::CopyToNode(Item &item) {
-    //  std::copy(&item, &item, &(this->item));
-    memcpy(&(this->item), &item, sizeof(Item));//work
+
+
+List::List(List &other) {
+    //copy constructor
 }
 
-List::Node::~Node() {
+List &operator+(List &item2) {
 
 }
+
+List::Node::~Node() = default;
 
 List::Node::Node() {
     this->next = nullptr;
 }
 
-void List::Node::Dispose() {
-    delete this;
-}
 
