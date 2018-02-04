@@ -16,11 +16,17 @@ int main() {
     for (int i = 0; i < 10; i++) {
         myList.AddItem(myItem);
     }
-    myList.Traverse(print);
+
+    for(List::Iterator it(myList); it(); it++){
+        print(*it.item);
+    }
+    std::cout << '\n';
+    std::cout << myList.GetCount() <<"\n";
    // std::cout << "\n" << myList[5].str;
 
     for(List::Iterator it(myList); it(); it++){
         print(*it.item);
     }
+    std::cout << '\n';
     return 0;
 }

@@ -42,15 +42,13 @@ public:
 
     void Free();
 
-    /*auto Count(){
+    unsigned long int GetCount(){
         return Count;
-    }*/
+    }
 
     Item &operator[](int x);
 
-    List &operator+( List& item2);
-
-    List(List &other);
+    List(const List &other);
 
     class Iterator;
 
@@ -91,6 +89,11 @@ public:
 
     explicit Iterator(List &lst){
         this->next = lst.head;
+        item = &next->item;
+    }
+
+    explicit Iterator(List *lst){
+        this->next = lst->head;
         item = &next->item;
     }
 

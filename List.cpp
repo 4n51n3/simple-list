@@ -68,26 +68,34 @@ void List::Free() {
 }
 
 Item &List::operator[](int x) {
-    unsigned int it = 0;
+    unsigned int index = 0;
     if (x > Count || x < 0)
         throw "[ERROR] (operator[]) Index out of range!\n";
+
+    for(List::Iterator it(this); it(); it++){
+        if(index == x)
+            return *it.item;
+        index++;
+    }
+    /*
     Node *pNode = this->head;
     while (pNode != nullptr) {
-        if (it == x)
+        if (index == x)
             return pNode->item;
         pNode = pNode->next;
-        it++;
-    }
+        index++;
+    }*/
     throw "[ERROR] (operator[]) Not found!\n";
 }
 
 
 
-List::List(List &other) {
+List::List(const List &other) {
     //copy constructor
-}
-
-List &operator+(List &item2) {
+    this->head = nullptr;
+    for(List::Iterator it(this); it(); it++){
+        this->AddItem(*it.item);
+    }
 
 }
 
